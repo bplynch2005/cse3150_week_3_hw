@@ -5,7 +5,7 @@
 
 // TODO: implement addStudent
 void addStudent(char* name, double gpa, char* names[], double gpas[], int& size, int capacity){
-	if(size+1 >= capacity){
+	if(size >= capacity){
 		throw "List full";
 	}
 	names[size] = name;
@@ -58,7 +58,8 @@ int main(int argc, char* argv[]) {
         std::cout << "5. Quit\n";
         std::cout << "Enter choice: ";
         std::cin >> choice;
-	std::cin.ignore(256, '\n');
+	std::cin.clear();
+	std::cin.ignore(256, '\n'); //added this line because the terminal was still picking up the '\n' in the cin buffer from the previous line (for example, the input for 'Enter Name: ' would just be the '\n' from the previous cin buffer).
 
         switch (choice) {
             case 1: {
@@ -94,32 +95,24 @@ int main(int argc, char* argv[]) {
 				throw "No students";
 			}
 
-			char buffer[256];
-			std::cout << "Enter Name: ";
-			std::cin.getline(buffer, 256);
-			
+			int i_name;
+			std::cout << "Enter Index of Student: ";
+			std::cin >> i_name;
+			gpaPtr = &gpas[i_name];
+
+			if(gpaPtr == nullptr){
+				throw "Not a valid index";
+			}
+
 			std::cout << "Enter GPA: ";
 			double gpa;
 			std::cin >> gpa;
 
-			for(int i = 0; i < size; ++i){
-				if(std::strcmp(names[i], buffer) == 0){
-					gpaPtr = &gpas[i];
-					updateGPA(gpaPtr, gpa);
-					break;
-				}
-			}
-			if(gpaPtr == nullptr){
-				throw "No student by given name";
-		
-			}
+			updateGPA(gpaPtr, gpa);
 		}
 		catch(const char* msg){
 			std::cout << msg << std::endl;
-			break;
 		}
-		
-		std::cout << *gpaPtr << std::endl;
 		
                 break;
             }
