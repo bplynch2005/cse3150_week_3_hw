@@ -98,12 +98,10 @@ int main(int argc, char* argv[]) {
 			int i_name;
 			std::cout << "Enter Index of Student: ";
 			std::cin >> i_name;
-			gpaPtr = &gpas[i_name];
-
-			if(gpaPtr == nullptr){
+			if(i_name >= size || i < 0){
 				throw "Not a valid index";
 			}
-
+			gpaPtr = &gpas[i_name];
 			std::cout << "Enter GPA: ";
 			double gpa;
 			std::cin >> gpa;
