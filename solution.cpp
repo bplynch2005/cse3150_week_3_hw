@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 			int i_name;
 			std::cout << "Enter Index of Student: ";
 			std::cin >> i_name;
-			if(i_name >= size || i < 0){
+			if(i_name >= size || i_name < 0){
 				throw "Not a valid index";
 			}
 			gpaPtr = &gpas[i_name];
